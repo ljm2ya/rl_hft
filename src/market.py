@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 from binance.client import Client
+from binance.websockets import BinanceSocketManager
 
 class Binance:
     def __init__(self, symbol):#symbol is BTCUSDT
         self.client = Client()
+        self.socket = BinanceSocketManager(self.client)
         self.symbol = symbol
 
     def get_orderbook(self, count):
