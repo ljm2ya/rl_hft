@@ -1,0 +1,15 @@
+#+TITLE: README
+
+* install
+1. clone package
+2. make python virtualenv
+virtualenv venv
+3. install requered packages
+pip3 install -r requirements.txt
+
+* update
+** git
+git add .
+git commit -m "something"
+** pip
+pip3 freeze > requirements.txt
