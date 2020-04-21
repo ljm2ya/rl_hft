@@ -1,9 +1,11 @@
+#!/usr/bin/env python3
 import websocket
 import threading
-from time import sleep
+from ast import literal_eval
 
 class BitmexWebSocket (threading.Thread):
     '''
+    BitMEX WebSocket Subscriptions
     "announcement",        // Site announcements
     "chat",                // Trollbox chat
     "connected",           // Statistics of connected users/bots
@@ -27,26 +29,27 @@ class BitmexWebSocket (threading.Thread):
     "tradeBin1h",          // 1-hour trade bins
     "tradeBin1d",          // 1-day trade bins
     '''
-
-    def __init__(self, subscript, pair = 'XBTUSD'):
+    def __init__(self, *subscriptions):
+        pair = 'XBTUSD'
+        subscription = ','.join(map(str, subscriptions))
         threading.Thread.__init__(self)
-        self.endpoint = 'wss://www.bitmex.com/realtime?subscribe='+subscript+':'+pair
+        endpoint = 'wss://www.bitmex.com/realtime?subscribe='+subscription+':'+pair
         self.received_data = []
         websocket.enableTrace(True)
-        self.ws = websocket.WebSocketApp(self.endpoint,
+        self.ws = websocket.WebSocketApp(endpoint,
                                          on_open = self._on_open,
                                          on_message = self._on_message,
                                          on_error = self._on_error,
                                          on_close = self._on_close)
 
-    def _on_message(self, ws, message):
-        self.received_data.append(message)
-
     def _on_open(self, ws):
         print("websocket open")
 
+    def _on_message(self, ws, message):
+        if 'data' in message:
+            self.received_data.append(literal_eval(message))
+
     def _on_error(self, ws):
-        print("error")
         self.ws._on_close(ws)
 
     def _on_close(self, ws):
@@ -54,8 +57,3 @@ class BitmexWebSocket (threading.Thread):
 
     def run(self):
         self.ws.run_forever()
-
-'''
-class BitmexOrder:
-    def __init__(self, api_key, api_secret, pair = 'XBTUSD'):
-'''
