@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import websocket
 import threading
-from ast import literal_eval
+import json
 
 class BitmexWebSocket (threading.Thread):
     '''
@@ -30,30 +30,43 @@ class BitmexWebSocket (threading.Thread):
     "tradeBin1d",          // 1-day trade bins
     '''
     def __init__(self, *subscriptions):
+        self.__reset()
         pair = 'XBTUSD'
-        subscription = ','.join(map(str, subscriptions))
-        threading.Thread.__init__(self)
+        subscription = ':XBTUSD,'.join(map(str, subscriptions))
         endpoint = 'wss://www.bitmex.com/realtime?subscribe='+subscription+':'+pair
-        self.received_data = []
+        threading.Thread.__init__(self)
         websocket.enableTrace(True)
         self.ws = websocket.WebSocketApp(endpoint,
-                                         on_open = self._on_open,
-                                         on_message = self._on_message,
-                                         on_error = self._on_error,
-                                         on_close = self._on_close)
+                                         on_open = self.__on_open,
+                                         on_message = self.__on_message,
+                                         on_error = self.__on_error,
+                                         on_close = self.__on_close)
 
-    def _on_open(self, ws):
-        print("websocket open")
+    def __on_open(self, ws):
+        self.__reset()
 
-    def _on_message(self, ws, message):
+    def __on_message(self, ws, message):
+        message = json.loads(message)
         if 'data' in message:
-            self.received_data.append(literal_eval(message))
+            table = message['table']
+            self.data[table] = message['data']
 
-    def _on_error(self, ws):
-        self.ws._on_close(ws)
+    def __on_error(self, ws):
+        self.ws.__on_close(ws)
 
-    def _on_close(self, ws):
+    def __on_close(self, ws):
         self.ws.close()
+
+    def __reset(self):
+        self.data = {}
+
+    def check_data(self):
+        return True if self.data else False
 
     def run(self):
         self.ws.run_forever()
+
+    def get_data(self):
+        data = self.data
+        self.__reset()
+        return data
