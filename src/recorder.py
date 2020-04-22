@@ -1,10 +1,7 @@
-#!/usr/bin/env python3
-
 import os
 import pickle
 import time
 import threading
-import pprint
 from bitmex import BitmexWebSocket
 
 class BitmexRecorder:
@@ -49,6 +46,5 @@ class BitmexRecorder:
         threading.Timer(self.interval, self.__record).start()
 
 if __name__ == "__main__":
-    parent_dir = os.path.dirname(os.getcwd())
-    recorder = BitmexRecorder(1, parent_dir)
+    recorder = BitmexRecorder(1, os.getcwd())
     recorder.start_recording()
