@@ -51,7 +51,9 @@ class BitmexWebSocket (threading.Thread):
             table = message['table']
             self.data[table] = message['data']
 
-    def __on_error(self, ws):
+    def __on_error(self, ws, error):
+        error = json.loads(error)
+        self.data['error'] = error
         self.ws.__on_close(ws)
 
     def __on_close(self, ws):
