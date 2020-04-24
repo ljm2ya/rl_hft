@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import websocket
 import threading
+from time import sleep
+import sys
 import json
 
 class BitmexWebSocket (threading.Thread):
@@ -32,6 +34,7 @@ class BitmexWebSocket (threading.Thread):
     def __init__(self, *subscriptions):
         self.__reset()
         pair = 'XBTUSD'
+        self.subscription = subscriptions
         subscription = ':XBTUSD,'.join(map(str, subscriptions))
         endpoint = 'wss://www.bitmex.com/realtime?subscribe='+subscription+':'+pair
         threading.Thread.__init__(self)
@@ -53,8 +56,17 @@ class BitmexWebSocket (threading.Thread):
 
     def __on_error(self, ws, error):
         error = json.loads(error)
-        self.data['error'] = error
-        self.ws.__on_close(ws)
+        f = open('error.txt', 'w')
+        stdout = sys.stdout
+        sys.stdout = f
+        print(error)
+        f.close()
+
+        #self.data['error'] = error
+        raise websocket.WebSocketException(error)
+        sleep(1)
+        self.__init__(self.subscription)
+        self.start()
 
     def __on_close(self, ws):
         self.ws.close()
