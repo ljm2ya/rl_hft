@@ -2,8 +2,9 @@ import os
 import pickle
 import time
 import threading
-from bitmex import BitmexWebSocket
+from market import BitmexWebSocket
 
+'''
 class BitmexRecorder:
     def __init__(self, interval, target_dir):
         self.socket = BitmexWebSocket('orderBook10', 'trade')
@@ -48,3 +49,14 @@ class BitmexRecorder:
 if __name__ == "__main__":
     recorder = BitmexRecorder(1, os.getcwd())
     recorder.start_recording()
+
+'''
+
+
+#ws = BitmexWebSocket('''liquidation', 'orderBookL2', 'trade')
+ws = BitmexWebSocket('connected')
+ws.start()
+while True:
+    time.sleep(1)
+    print(ws.get_data())
+

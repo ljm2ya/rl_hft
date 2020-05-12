@@ -2,7 +2,7 @@ import os
 import pickle
 from time import sleep
 
-class Reader:
+class DataReader:
     def __init__(self, data_dir, initial_date):
         self.target_dir = data_dir + '/' + str(initial_date)
         self.walk = self.__walk_files(self.target_dir)
@@ -14,7 +14,7 @@ class Reader:
 
     def next_file(self):
         filename = next(self.walk)
-        with open(filename, 'rb') as f:
+        with open(self.target_dir +'/'+ filename, 'rb') as f:
             data = pickle.load(f)
         return data
 

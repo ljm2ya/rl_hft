@@ -1,4 +1,6 @@
-#!/usr/bin/env python3
+import numpy as np
+import torch.nn as nn
 
-
-class
+class DRQN:
+    def __init__(self):
+        pass
