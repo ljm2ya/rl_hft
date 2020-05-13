@@ -2,6 +2,7 @@ import websocket
 import threading
 import json
 import time
+import os
 
 class BaseWebSocket (threading.Thread):
     def __init__(self):
@@ -25,9 +26,13 @@ class BaseWebSocket (threading.Thread):
     def _on_error(self, ws, error):
         print(error)
         self._on_close(ws)
+        os.execl(sys.executable, sys.executable, *sys.argv)
+
 
     def _on_close(self, ws):
         self.ws.close()
+        os.execl(sys.executable, sys.executable, *sys.argv)
+
 
     def _reset(self):
         self.data = []

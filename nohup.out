@@ -1,0 +1,36 @@
+--- request header ---
+GET /realtime?subscribe=orderBook10:XBTUSD,trade:XBTUSD HTTP/1.1
+Upgrade: websocket
+Connection: Upgrade
+Host: www.bitmex.com
+Origin: http://www.bitmex.com
+Sec-WebSocket-Key: fdkfSz7wr9BqgAnAFJUrDA==
+Sec-WebSocket-Version: 13
+
+
+-----------------------
+--- response header ---
+HTTP/1.1 101 Switching Protocols
+Date: Wed, 22 Apr 2020 18:41:13 GMT
+Connection: upgrade
+Set-Cookie: AWSALBTG=WcG0tksAZi2dptnRHQCxXostLRDZ5qTzR86+7ckBS+U0ucOMPyVubCpxYlbS9hZSJ6bVEwNyFFd9cLslmUVATYQi0GxfRjsL8x7VoaAC9+c7fbCpemvfosv8kuntRx9sn13pUtdEV6OtrE1+F5s3nVxaM1hclpF/xXxJ//cwys3VpUOwoEI=; Expires=Wed, 29 Apr 2020 18:41:13 GMT; Path=/
+Set-Cookie: AWSALBTGCORS=WcG0tksAZi2dptnRHQCxXostLRDZ5qTzR86+7ckBS+U0ucOMPyVubCpxYlbS9hZSJ6bVEwNyFFd9cLslmUVATYQi0GxfRjsL8x7VoaAC9+c7fbCpemvfosv8kuntRx9sn13pUtdEV6OtrE1+F5s3nVxaM1hclpF/xXxJ//cwys3VpUOwoEI=; Expires=Wed, 29 Apr 2020 18:41:13 GMT; Path=/; SameSite=None; Secure
+Upgrade: websocket
+Sec-WebSocket-Accept: A+jCAQ7RTPrcBcatwTDZKbT8qWM=
+Sec-WebSocket-Version: 13
+WebSocket-Server: uWebSockets
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+-----------------------
+Exception in thread Thread-99704:
+Traceback (most recent call last):
+  File "/usr/lib/python3.5/threading.py", line 914, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.5/threading.py", line 1180, in run
+    self.function(*self.args, **self.kwargs)
+  File "src/recorder.py", line 39, in __record
+    data = {'orderbook': bulk_data['orderBook10'].pop(), 'trades':bulk_data['trade']}
+KeyError: 'orderBook10'
+
+error from callback <bound method BitmexWebSocket.__on_error of <BitmexWebSocket(Thread-1, started 139997075597056)>>: __on_error() takes 2 positional arguments but 3 were given
+  File "/home/worker/rl_hft/venv/lib/python3.5/site-packages/websocket/_app.py", line 332, in _callback
+    callback(self, *args)
