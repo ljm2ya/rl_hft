@@ -28,11 +28,9 @@ class BaseWebSocket (threading.Thread):
         self._on_close(ws)
         os.execl(sys.executable, sys.executable, *sys.argv)
 
-
     def _on_close(self, ws):
         self.ws.close()
         os.execl(sys.executable, sys.executable, *sys.argv)
-
 
     def _reset(self):
         self.data = []
