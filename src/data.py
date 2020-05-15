@@ -1,20 +1,21 @@
-#!/usr/bin/env python3
 import json
-from bitmex import BitmexDataRefiner
-#from binance import BinanceDataRefiner
+
+from reader import DataReader
+
+class BitmexDataMiner:
+    def __init__(self, data_dir, initial_date):
+        self.reader = DataReader(data_dir, initial_date)
 
 
-class DataRecorder:
-    def __init__(self, market):
-        if market is 'bitmex':
-            self.dr = BitmexDataRefiner()
-        elif market is 'binance':
-            self.dr = BinanceDataRefiner()
-        else:
-            print("error, no market named "+market)
+    def next_data(self):
+        bulk_data = self.reader.next_file()
 
-    def run(self):
-        self.dr.start()
+        return data
 
-dr = DataRefiner()
-dr.run()
+
+def bitmex_data_process(bulk_data):
+
+
+    def _idtoprice(self, ID, symbolIdx=88, ticksize=0.01):
+        price = ((100000000 * symbolIdx) - ID) * ticksize
+        return price

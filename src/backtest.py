@@ -1,15 +1,15 @@
 import time
 import threading
-
 from reader import DataReader
 
-class BackTester:
-    def __init__(self, data_dir, start_day):
-        self.reader = DataReader(data_dir, start_day)
+class MarketSimulator:
+    def __init__(self, data_dir, start_day, limit_fee, market_fee, liquidation_fee):
+        self.start_time = time.time()
+        self.timesteps = 0
+        self.miner = DataReader(data_dir, start_day)
+        self.fee = (limit_fee, market_fee, liquidation_fee)
         self.queuedOrders = []
-        self.orderBook = {'buy':[], 'sell':[]}
-        self.bestbuy
-        self.bestsell
+        self.orderbook = {'buy':[], 'sell':[]}
 
 # model form
 # model is class that has action selector, trainer(only ml model), report generator
@@ -17,6 +17,7 @@ class BackTester:
 # get_report() class method returns model report
 
     def __check_order_sequence(self, side, price, sequence):
+        pass
 
     #order form : order = {'num': 2, 'side': 'buy', 'price': 8394.3, 'quantity': 50, 'sequence': 3245}
     def check_order(self, order):
@@ -35,11 +36,15 @@ class BackTester:
             else:
                 return 0
 
-    def get_
 # data form
 # data = {'orderbook': [], 'trades': [], '}
     def next(self):
-        data = self.reader.next_file()
-        for model in models:
+        data = self.miner.next_data()
+        self.timesteps += 1
+        for order in self.queuedOrders:
 
-    def report(self):
+
+    def print_report(self):
+        current_time = time.time()
+        print("Elapsed time: ", current_time - self.start_time)
+        print("Timesteps: ", self.timesteps)

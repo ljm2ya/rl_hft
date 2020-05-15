@@ -3,6 +3,7 @@ import threading
 import json
 import time
 import os
+from pprint import pprint
 
 class BaseWebSocket (threading.Thread):
     def __init__(self):
@@ -63,6 +64,12 @@ class BitmexWebSocket (BaseWebSocket):
         endpoint = 'wss://www.bitmex.com/realtime?subscribe='+subscription
         self._init_websocket(endpoint)
 
+
+socket = BitmexWebSocket('orderBookL2_25:XBTUSD', 'trade:XBTUSD')
+socket.start()
+while True:
+    time.sleep(1)
+    print(socket.get_data())
 
 '''
 class BinanceLOBRecorder:
