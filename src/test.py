@@ -1,8 +1,2 @@
-def mul(x):
-    return x*x
-
-def calc(mul, x):
-    return mul(x)
-
-
-print(calc(mul, 5))
+l = [[1,2], [2,3], [4,436], [5,64], [7,556]]
+print([1,%] in l)

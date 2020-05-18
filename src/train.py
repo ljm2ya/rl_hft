@@ -1,14 +1,17 @@
+import os
 import configparser
 import threading
 
-from reader import Reader
-from agent import DRQN
+from data import BitmexData
+from simulator import MarketSimulator
+
+data = BitmexData()
+
+envi
 
 
-class
 class Trainer:
     def __init__(self, pretrained_nn = None):
-        self.reader = Reader(data_dir, initial_date)
         self.agent = DRQN()
         self._load_hyperparameters()
 
@@ -18,7 +21,7 @@ class Trainer:
         config.read('config.ini')
 
 
-    def __get_environments(self, data):
+    def _get_environments(self, data):
         return environments
 
     def start(self, episode):

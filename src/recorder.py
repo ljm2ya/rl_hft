@@ -48,13 +48,3 @@ if __name__ == "__main__":
     recorder = BitmexRecorder(1, os.getcwd())
     recorder.start_recording()
 
-
-'''
-ws = BitmexWebSocket('liquidation', 'orderBookL2', 'trade')
-ws = BitmexWebSocket('connected')
-ws.start()
-while True:
-    time.sleep(1)
-    print(ws.get_data())
-
-'''
