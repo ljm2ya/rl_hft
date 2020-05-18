@@ -1,13 +1,11 @@
 import time
 import threading
-from reader import DataReader
 
 class MarketSimulator:
-    def __init__(self, data_dir, start_day, limit_fee, market_fee, liquidation_fee):
+    def __init__(self, next_data_func):
+        self._next_data = next_data_func
         self.start_time = time.time()
         self.timesteps = 0
-        self.miner = DataReader(data_dir, start_day)
-        self.fee = (limit_fee, market_fee, liquidation_fee)
         self.queuedOrders = []
         self.orderbook = {'buy':[], 'sell':[]}
 
@@ -17,6 +15,9 @@ class MarketSimulator:
 # get_report() class method returns model report
 
     def __check_order_sequence(self, side, price, sequence):
+        pass
+
+    def _update_orderbook(self, orderbook_change):
         pass
 
     #order form : order = {'num': 2, 'side': 'buy', 'price': 8394.3, 'quantity': 50, 'sequence': 3245}
@@ -36,12 +37,19 @@ class MarketSimulator:
             else:
                 return 0
 
+    def take_order(self, side, price, quantity):
+        pass
+       
+
 # data form
 # data = {'orderbook': [], 'trades': [], '}
-    def next(self):
-        data = self.miner.next_data()
+    def next_step(self):
+        data = self._next_data()
         self.timesteps += 1
         for order in self.queuedOrders:
+            order_filled = self.check_order(order)
+            if order_filled == 1:
+                self.queuedOrders
 
 
     def print_report(self):

@@ -65,7 +65,7 @@ class BitmexWebSocket (BaseWebSocket):
         self._init_websocket(endpoint)
 
 
-socket = BitmexWebSocket('orderBookL2_25:XBTUSD', 'trade:XBTUSD')
+socket = BitmexWebSocket('liquidataion:XBTUSD')
 socket.start()
 while True:
     time.sleep(1)
